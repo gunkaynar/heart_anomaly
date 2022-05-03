@@ -34,14 +34,14 @@ test_y = torch.from_numpy(test_y)
 validation_x = torch.from_numpy(validation_x)
 validation_y = torch.from_numpy(validation_y)
 
-epoch_num = 50
+epoch_num = 200
 net = AnomalyModel()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters(), lr=0.001)
 train_losses = []
 validation_losses = []
 for epoch in range(epoch_num):
-    for i, (x, y) in enumerate(batch_generator_torch(train_x, train_y, batch_size=len(train_x)//4, shuffle=True)):
+    for i, (x, y) in enumerate(batch_generator_torch(train_x, train_y, batch_size=64, shuffle=True)):
         train_loss = []
         optimizer.zero_grad()
         output = net(x.float())
@@ -69,8 +69,9 @@ plt.title('Training and validation loss')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
-plt.show()
 plt.savefig('loss.png')
+plt.show()
+
 plt.clf()
 
 y_true = []
@@ -82,8 +83,9 @@ prediction = np.argmax(prediction_proba.detach().numpy(), axis=1)
 
 custCnnConfMat = confusion_matrix(y_true, prediction)
 sns.heatmap(custCnnConfMat / np.sum(custCnnConfMat), annot=True, fmt='.3%', cmap='Blues')
-plt.show()
 plt.savefig("confusion_matrix.png")
+plt.show()
+
 print('Precision: %.3f' % precision_score(y_true, prediction, average='macro'))
 print('F1 Score: %.3f' % f1_score(y_true, prediction, average='macro'))
 print('Recall: %.3f' % recall_score(y_true, prediction, average='macro'))
