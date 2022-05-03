@@ -1,12 +1,14 @@
 from merlion.utils import TimeSeries
 from ts_datasets.anomaly import NAB
 from mutils import *
+import sys
+import os
 
 
 # Data loader returns pandas DataFrames, which we convert to Merlion TimeSeries
 time_series, metadata = NAB(subset="realKnownCause")[3]
-train_data, train_labels = read_data('dataset/101')
-test_data, test_labels = read_data('dataset/101')
+train_data, train_labels = read_data('C:/Users/TR/Desktop/CS550 Proje/heart_anomaly/dataset/101')
+test_data, test_labels = read_data('C:/Users/TR/Desktop/CS550 Proje/heart_anomaly/dataset/101')
 test_labels_tmp = TimeSeries.from_pd(metadata.anomaly[~metadata.trainval])
 """
 

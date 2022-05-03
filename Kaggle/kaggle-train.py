@@ -5,6 +5,7 @@ import wfdb
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import pywt
 
 def denoise(data):
     w = pywt.Wavelet('sym4')
@@ -21,7 +22,7 @@ def denoise(data):
 
 #ecg_record = wfdb.rdrecord('mit-bih-arrhythmia-database-1.0.0/106', channels= [0])
 
-ecg_record = wfdb.rdrecord('mit-bih-arrhythmia-database-1.0.0/106', sampfrom= 0, sampto= 108300, channels= [0])
+ecg_record = wfdb.rdrecord('mit-bih-arrhythmia-database-1.0.0/101', sampfrom= 0, sampto= 108300, channels= [0])
 
 ecg = denoise(ecg_record.p_signal[:,0])
 train_len = 108000
@@ -100,7 +101,7 @@ class LSTM(nn.Module):
 
         return hidden
 
-ecg_val = wfdb.rdrecord('mit-bih-arrhythmia-database-1.0.0/100', sampfrom= 108300, sampto= 129900, channels= [0])
+ecg_val = wfdb.rdrecord('mit-bih-arrhythmia-database-1.0.0/101', sampfrom= 108300, sampto= 129900, channels= [0])
 ecg_val = denoise(ecg_val.p_signal[:,0])
 
 wfdb.plot_items(ecg_val)
