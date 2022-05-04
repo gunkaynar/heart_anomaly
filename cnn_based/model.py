@@ -1,5 +1,6 @@
 import torch.nn as nn
 import torch
+import numpy as np
 
 
 class AnomalyModel(torch.nn.Module):
@@ -9,7 +10,7 @@ class AnomalyModel(torch.nn.Module):
         self.cnn1 = nn.Conv1d(in_channels=360, out_channels=16, kernel_size=13, padding='same', stride=1)
         self.activation = torch.nn.ReLU()
         self.pool1 = nn.AvgPool1d(3, stride=1, padding=1)
-        self.cnn2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=15,padding='same', stride=1)
+        self.cnn2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=15, padding='same', stride=1)
         self.cnn3 = nn.Conv1d(in_channels=32, out_channels=64, kernel_size=17, padding='same', stride=1)
         self.cnn4 = nn.Conv1d(in_channels=64, out_channels=128, kernel_size=19, padding='same', stride=1)
         self.flatten = nn.Flatten()
@@ -38,3 +39,16 @@ class AnomalyModel(torch.nn.Module):
         x = self.linear2(x)
         x = self.softmax(x)
         return x
+
+
+def shuffle_torch(x, y):
+    p = np.random.permutation(x.shape[0])
+    return x[p], y[p]
+
+
+def batch_generator_torch(x, y, batch_size, shuffle=True):
+    if shuffle:
+        x, y = shuffle_torch(x, y)
+    n_samples = x.shape[0]
+    for i in range(0, n_samples, batch_size):
+        yield x[i:i + batch_size], y[i:i + batch_size]
