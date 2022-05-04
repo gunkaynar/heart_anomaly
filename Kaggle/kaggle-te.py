@@ -130,8 +130,8 @@ train_window = 850  # 3 cardiac cycles in each sequence
 # train_data = create_inout_sequences(ecg_train, train_window) 129900
 batch_size = 64
 
-ecg_val = wfdb.rdrecord('mit-bih-arrhythmia-database-1.0.0/106', sampfrom= 259900, sampto= 299900 , channels= [0])
-ecg_ann = wfdb.rdann('mit-bih-arrhythmia-database-1.0.0/106', extension='atr', sampfrom= 259900, sampto= 299900, shift_samps=True)
+ecg_val = wfdb.rdrecord('mit-bih-arrhythmia-database-1.0.0/100', sampfrom= 108300, sampto= 129900, channels= [0])
+ecg_ann = wfdb.rdann('mit-bih-arrhythmia-database-1.0.0/100', extension='atr',  sampfrom= 108300, sampto= 129900, shift_samps=True)
 wfdb.plot_wfdb(ecg_val, ecg_ann,plot_sym=True)
 
 ecg_val = denoise(ecg_val.p_signal[:,0])
@@ -155,7 +155,7 @@ net.load_state_dict(torch.load('rnn_20_epoch.net')["state_dict"])
 
 an = test(net, val_data_loader, batch_size)
 
-an = [a_ if a_ > 0.30 else 0 for a_ in an]
+an = [a_ if a_ > 0.18 else 0 for a_ in an]
 
 plt.plot(an)
 plt.show()
@@ -163,6 +163,7 @@ plt.show()
 tp = 0
 pos = 0
 fn = 0
+fp = 0
 
 for i in range(len(ecg_ann.sample)):
     ts = ecg_ann.sample[i]
@@ -170,21 +171,19 @@ for i in range(len(ecg_ann.sample)):
     if typ != "N":
         pos += 1
         #print(ts)
-        if an[max(ts - (2 * train_window), 0)] != 0:
+        if an[min(max(ts - (train_window), 0), len(an)-1)] != 0:
             tp += 1
         else:
             fn += 1
+    else:
+        if an[min(max(ts - (train_window), 0), len(an)-1)] != 0:
+            fp += 1
 
 print(tp, pos, fn)
 
-all = []
-for i in range(0,len(an),batch_size):
-    if an[i] != 0:
-        all.append(i)
-
-
-precision = tp / (tp + fn)
-recall = tp / len(all)
+recall = tp / (tp + fn)
+precision = tp / (tp + fp)
 
 print('Precision: {}'.format(precision))
 print('Recall: {}'.format(recall))
+print('F1 score: {}'.format(2 * (precision * recall) / (precision + recall)))
