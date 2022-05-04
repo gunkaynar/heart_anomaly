@@ -94,7 +94,7 @@
       <option name="presentableId" value="Default" />
       <updated>1651607436703</updated>
       <workItem from="1651607437829" duration="4865000" />
-      <workItem from="1651701806132" duration="638000" />
+      <workItem from="1651701806132" duration="1861000" />
     </task>
     <servers />
   </component>
@@ -102,7 +102,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/cnn_based$training2.coverage" NAME="training2 Coverage Results" MODIFIED="1651702333650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/cnn_based$training.coverage" NAME="training Coverage Results" MODIFIED="1651611769558" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/cnn_based$training2.coverage" NAME="training2 Coverage Results" MODIFIED="1651702670277" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/cnn_based$training.coverage" NAME="training Coverage Results" MODIFIED="1651702678906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

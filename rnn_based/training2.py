@@ -34,9 +34,9 @@ test_y = torch.from_numpy(test_y)
 validation_x = torch.from_numpy(validation_x)
 validation_y = torch.from_numpy(validation_y)
 
-epoch_num = 50
+epoch_num = 100
 input_dim = 1    # input dimension
-hidden_dim = 10  # hidden layer dimension
+hidden_dim = 16  # hidden layer dimension
 layer_dim = 1     # number of hidden layers
 output_dim = 5   # output dimension
 net = RNNModel(input_dim, hidden_dim, layer_dim, output_dim)
